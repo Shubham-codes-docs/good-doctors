@@ -10,8 +10,10 @@ exports.addPersons = async (req, res, next) => {
   const { name, age, gender, mobile } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new Error("Validation Failed,incorrect fields entered");
-    error.statusCode = 422;
+    const error = {
+      msg: "Incomplete fields.",
+      status: 401,
+    };
     next(error);
   }
 
@@ -30,14 +32,18 @@ exports.editPerson = async (req, res, next) => {
   const { name, age, gender, mobile } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const error = new Error("Validation Failed,incorrect fields entered");
-    error.statusCode = 422;
+    const error = {
+      msg: "Incomplete fields.",
+      status: 401,
+    };
     next(error);
   }
   const person = await Person.findById({ _id: id });
   if (!person) {
-    const error = new Error("No user found");
-    error.statusCode = 404;
+    const error = {
+      msg: "No such user found",
+      status: 404,
+    };
     next(error);
   }
   person.name = name;
