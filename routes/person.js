@@ -32,6 +32,6 @@ route.put(
   person.editPerson
 );
 
-route.delete("/person/:id");
+route.delete("/person/:id", person.deletePerson);
 
 module.exports = route;
