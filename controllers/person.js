@@ -3,7 +3,7 @@ const { validationResult } = require("express-validator");
 
 exports.getPersons = async (req, res, next) => {
   const persons = await Person.find({});
-  res.status(200).json({ persons });
+  res.status(200).json({ persons, error: false });
 };
 
 exports.addPersons = async (req, res, next) => {
@@ -24,7 +24,7 @@ exports.addPersons = async (req, res, next) => {
     mobile,
   });
   await newPerson.save();
-  res.status(200).json({ msg: "User saved successfully" });
+  res.status(200).json({ msg: "User saved successfully", error: false });
 };
 
 exports.editPerson = async (req, res, next) => {
@@ -51,5 +51,12 @@ exports.editPerson = async (req, res, next) => {
   person.gender = gender;
   person.mobile = mobile;
   await person.save();
-  res.status(200).json({ msg: "User updated successfully" });
+  res.status(200).json({ msg: "User updated successfully", error: false });
+};
+
+exports.deletePerson = async (req, res, next) => {
+  const id = req.params.id;
+
+  await Person.findByIdAndDelete({ _id: id });
+  res.status(200).json({ msg: "User deleted successfully", error: false });
 };

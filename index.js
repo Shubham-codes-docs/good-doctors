@@ -16,7 +16,7 @@ app.use("/api", personRoutes);
 
 //error handling middleware
 app.use((err, req, res, next) => {
-  res.status(err.status).json({ msg: err.msg });
+  res.status(err.status).json({ msg: err.msg, error: true });
   next();
 });
 
